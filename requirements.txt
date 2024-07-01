@@ -4,6 +4,7 @@ firebase_admin
 jsonpickle
 pyrate-limiter==2.3.3
 cachetools 
+pillow
 psutil
 speedtest-cli
 telegraph[aio]

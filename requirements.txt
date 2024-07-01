@@ -1,4 +1,5 @@
 threading
+flask 
 google-generativeai 
 firebase_admin
 jsonpickle

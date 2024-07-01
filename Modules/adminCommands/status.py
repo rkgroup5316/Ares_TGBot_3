@@ -23,7 +23,7 @@ from telegram.ext import (
 
 @IsAdmin
 async def stats(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    image = Image.open('assets\statsbg.jpg').convert('RGB')
+    image = Image.open('assets/statsbg.jpg').convert('RGB')
     IronFont = ImageFont.truetype("assets\IronFont.otf", 42)
     draw = ImageDraw.Draw(image)
     

@@ -1,0 +1,17 @@
+textwrap
+threading
+google-generativeai 
+firebase_admin
+jsonpickle
+pyrate-limiter==2.3.3
+cachetools 
+psutil
+shutil
+PIL
+speedtest-cli
+telegraph[aio]
+search_engine_parser==0.6.8
+bing-image-downloader==1.1.2
+wikipedia
+youtube_search
+yt_dlp

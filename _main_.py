@@ -43,8 +43,12 @@ from telegram.ext import (
     filters
 )
 from config import * # imports all the attributes and modules
+from utils.helper.keep_alive import keep_alive
 logger.info("ALl modules imported successfully...")
 
+logging.info("strting flask server!")
+keep_alive()
+logging.info("server Started!")
 
 @restricted
 @rate_limit

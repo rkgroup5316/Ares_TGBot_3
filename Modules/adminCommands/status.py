@@ -65,7 +65,7 @@ async def stats(update: Update, context: ContextTypes.DEFAULT_TYPE):
     caption = f"<b>OS Uptime:</b> {osuptime}\n<b>Bot Usage:</b> {botusage}\n\n<b>Total Space:</b> {disk_total}\n<b>Free Space:</b> {disk_free}\n\n<b>Download:</b> {download}\n<b>Upload:</b> {upload}"
      
     start = datetime.now()
-    msg = await update.message.reply_photo(photo=load_asset("assets\progress.jpg"),caption=caption,parse_mode="HTML")    
+    msg = await update.message.reply_photo(photo=load_asset(r"Ares_TGBot_3\assets\progress.jpg"),caption=caption,parse_mode="HTML")    
     end = datetime.now()
 
     draw_progressbar(243, int(cpu_percentage))

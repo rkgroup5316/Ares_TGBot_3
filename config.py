@@ -29,7 +29,7 @@ TLG_TOKEN = os.environ.get("TLG_TOKEN")
 
 
 
-DB_SESSION_INFO=json.load(os.environ.get("DB_SESSION_INFO"))
+DB_SESSION_INFO=json.loads(os.environ.get("DB_SESSION_INFO"))
 
 OWNER_ID = 6258187891
 OWNER_NAME = "ℝ𝕒𝕧𝕚 𝕂𝕖𝕥𝕒𝕟 ℝ𝕒𝕛"

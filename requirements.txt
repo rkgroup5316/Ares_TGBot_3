@@ -5,7 +5,6 @@ jsonpickle
 pyrate-limiter==2.3.3
 cachetools 
 psutil
-PIL
 speedtest-cli
 telegraph[aio]
 search_engine_parser==0.6.8

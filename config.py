@@ -14,12 +14,12 @@ BOTS_USERNAME = "Ares_chatBot"
 
 
 # files
-START_IMAGE_PATH = r"Ares_TGBot_3\assets\START_ARES.jpg"
-START_IMAGE_PATH_ = r"Ares_TGBot_3\assets\START_ARES2.jpg"
-ERROR429 = r"Ares_TGBot_3\assets\Sic429.jpeg"
-ACCESS_DENIED = r"Ares_TGBot_3\assets\acess_denied.png"
-WARN_USERS = r"Ares_TGBot_3\assets\warn_users.jpg"
-LOADING_BAR = r"Ares_TGBot_3\assets/progress.jpg"
+START_IMAGE_PATH = r"assets/START_ARES.jpg"
+START_IMAGE_PATH_ = r"assets/START_ARES2.jpg"
+ERROR429 = r"assets/Sic429.jpeg"
+ACCESS_DENIED = r"assets/acess_denied.png"
+WARN_USERS = r"assets/warn_users.jpg"
+LOADING_BAR = r"assets/progress.jpg"
 
 
 # API KEYS

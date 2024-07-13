@@ -99,6 +99,20 @@ async def button_click(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 
+async def post_init(application: Application) -> None:
+    START_TIME = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    start_message = (
+            f"<b>Bot Started</b>\n"
+            f"Start Time: <code>{START_TIME}</code>\n"
+            f"Your shutdown password is: <code>{SPECIAL_PASSWORD}</code>"
+        )
+        
+    await application.bot.send_message(
+        chat_id=OWNER_ID, text=message, parse_mode=ParseMode.HTML
+    )
+
+
 
 # https://github.com/python-telegram-bot/python-telegram-bot/wiki/Avoiding-flood-limits (use for broadcast commands)
 def main() -> None:

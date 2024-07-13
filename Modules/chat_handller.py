@@ -7,7 +7,7 @@ from utils.decoders_ import restricted
 import textwrap
 import jsonpickle
 import google.generativeai as genai
-from telegram import Update
+from telegram import Update,CommandHandler
 from telegram.ext import (
     ContextTypes
 )
@@ -190,9 +190,7 @@ def generate_response(chat_id, input_text: str) -> str:
 
 @restricted
 async def media_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-        if DB.is_user_blocked(str(update.message.from_user.id)):
-            logger.info(f"Ignoring command from blocked user {str(update.message.from_user.id)}.")
-            return
+        
         message = update.message
         if update.message.reply_to_message:
             reply_to_bot = (
@@ -378,11 +376,27 @@ async def Reply_handller(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
             # Handle errors during cleanup
             await update.message.reply_text(f"An error occurred while cleaning up: {e}")
 
+@restricted
+async def Clear_history(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:     
+    if update.effective_chat.type == "private":
+        msg = await update.message.reply_text(f'Clearing chat history....')
+        chat_histories[chat_id] = model.start_chat(history=[])
+        DB.chat_history_add(chat_id,[])
+        await msg.edit_text("history successful cleared!🥳🥳")
+    else:
+        chat_admins = await update.effective_chat.get_administrators()
+        if update.effective_user in (admin.user for admin in chat_admins):
+            msg = await update.message.reply_text(f'Clearing chat history....')
+            chat_histories[chat_id] = model.start_chat(history=[])
+            DB.chat_history_add(chat_id,[])
+            await msg.edit_text("history successful cleared!🥳🥳")
+    
+           
+        else:
+           await update.message.reply_text(" You need to be group/chat admin to do this function.")
 
 
-                 
-
-
+clear_history_commamd = CommandHandler(("clear_history","clearhistory","clear"),Clear_history)
             
             
         

@@ -104,7 +104,7 @@ async def button_click(update: Update, context: ContextTypes.DEFAULT_TYPE):
 def main() -> None:
     """Run the bot."""
     # Create the Application and pass it your bot's token.
-    application = Application.builder().token(TLG_TOKEN).concurrent_updates(True).build()
+    application = Application.builder().token(TLG_TOKEN).concurrent_updates(True).build().post_init(BOT_ACTIVATION_MESSAGE)
     
    
     message_handler = MessageHandler(filters.TEXT & ~filters.COMMAND & ~filters.Entity(MessageEntity.MENTION)& ~filters.REPLY & ~filters.Entity(MessageEntity.TEXT_MENTION), process_message)
@@ -163,8 +163,7 @@ def main() -> None:
     
      # Run the bot until the user presses Ctrl-C
     application.run_polling(allowed_updates=Update.ALL_TYPES,drop_pending_updates= True)
-    asyncio.run(BOT_ACTIVATION_MESSAGE(application))
-
+    
 
 
 

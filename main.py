@@ -110,7 +110,7 @@ async def post_init(application: Application) -> None:
         )
         
     await application.bot.send_message(
-        chat_id=OWNER_ID, text=message, parse_mode=ParseMode.HTML
+        chat_id=OWNER_ID, text=start_message, parse_mode=ParseMode.HTML
     )
 
 

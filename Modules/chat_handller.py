@@ -378,7 +378,8 @@ async def Reply_handller(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
             await update.message.reply_text(f"An error occurred while cleaning up: {e}")
 
 @restricted
-async def Clear_history(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:     
+async def Clear_history(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None: 
+    chat_id = update.message.chat_id
     if update.effective_chat.type == "private":
         msg = await update.message.reply_text(f'Clearing chat history....')
         chat_histories[chat_id] = model.start_chat(history=[])

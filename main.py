@@ -118,7 +118,7 @@ async def post_init(application: Application) -> None:
 def main() -> None:
     """Run the bot."""
     # Create the Application and pass it your bot's token.
-    application = Application.builder().token(TLG_TOKEN).concurrent_updates(True).build().post_init(BOT_ACTIVATION_MESSAGE)
+    application = Application.builder().token(TLG_TOKEN).concurrent_updates(True).build().post_init(post_init)
     
    
     message_handler = MessageHandler(filters.TEXT & ~filters.COMMAND & ~filters.Entity(MessageEntity.MENTION)& ~filters.REPLY & ~filters.Entity(MessageEntity.TEXT_MENTION), process_message)

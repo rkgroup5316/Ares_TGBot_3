@@ -7,9 +7,10 @@ from utils.decoders_ import restricted
 import textwrap
 import jsonpickle
 import google.generativeai as genai
-from telegram import Update,CommandHandler
+from telegram import Update
 from telegram.ext import (
-    ContextTypes
+    ContextTypes,
+    CommandHandler
 )
 
 import os 

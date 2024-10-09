@@ -123,7 +123,7 @@ def main() -> None:
     
    
     message_handler = MessageHandler(filters.TEXT & ~filters.COMMAND & ~filters.Entity(MessageEntity.MENTION)& ~filters.REPLY & ~filters.Entity(MessageEntity.TEXT_MENTION), process_message)
-    mediaChat_handler = MessageHandler(filters.AUDIO | filters.VIDEO |filters.PHOTO |filters.Document.ALL & ~filters.Entity("MENTION") ,media_handler)
+    mediaChat_handler = MessageHandler(filters.VOICE |filters.AUDIO | filters.VIDEO |filters.PHOTO |filters.Document.ALL & ~filters.Entity("MENTION") ,media_handler)
     Reply_handler = MessageHandler(filters.REPLY & ~filters.COMMAND & ~filters.Entity(MessageEntity.MENTION)& ~filters.Entity(MessageEntity.TEXT_MENTION),Reply_handller)
     application.add_handler(message_handler)
     application.add_handler(mediaChat_handler)

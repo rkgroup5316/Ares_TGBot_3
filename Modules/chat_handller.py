@@ -204,7 +204,7 @@ async def media_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
             user_message = update.message.caption.lower()
         else:
             user_message = " "
-
+        print(update.message.chat.type)
         if (
             user_message.startswith(START_SWITCH) or  # Check for start switch command
             update.message.chat.type == 'private' or  # Check for private chat

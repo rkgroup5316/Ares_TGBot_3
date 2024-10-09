@@ -231,7 +231,7 @@ async def download_and_process_video(update: Update, context: ContextTypes.DEFAU
         if hasattr(update.message, "caption"):
             user_message = update.message.caption if update.message.caption else "Discribe what you see."
         else:
-            user_message ="Discribe what user sended you.."
+            user_message ="respond to what user sended you.."
 
         if update.message.photo:
             file = await update.message.effective_attachment[-1].get_file()
@@ -266,7 +266,7 @@ async def download_and_process_video(update: Update, context: ContextTypes.DEFAU
 
 async def Genrate_text_via_Media(update: Update, context: ContextTypes.DEFAULT_TYPE,file_path: str,user_message=None):
         if not user_message:
-            user_message= "Discribe what user send you ."
+            user_message= "respond to what user send you ."
 
         chat_id = update.message.chat_id
         media_file = genai.upload_file(path=file_path)

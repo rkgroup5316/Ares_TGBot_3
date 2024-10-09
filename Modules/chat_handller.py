@@ -229,7 +229,7 @@ async def download_and_process_video(update: Update, context: ContextTypes.DEFAU
         # Download the video file
         chat_id = update.message.chat_id
         if hasattr(update.message, "caption"):
-            user_message = update.message.caption if update.message.caption else "Discribe what you see."
+            user_message = update.message.caption if update.message.caption else "respond to what user sended you.."
         else:
             user_message ="respond to what user sended you.."
 

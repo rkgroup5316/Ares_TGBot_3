@@ -398,6 +398,47 @@ async def Clear_history(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
            await update.message.reply_text(" You need to be group/chat admin to do this function.")
 
 
+@restricted
+async def changeprompt(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None: 
+    chat_id = update.message.chat_id
+    new_promt = " ".join(context.args)
+    if update.effective_chat.type == "private":
+           
+    else:
+        chat_admins = await update.effective_chat.get_administrators()
+        if update.effective_user in (admin.user for admin in chat_admins):
+           
+        else:
+           await update.message.reply_text(" You need to be group/chat admin to do this function.")
+           return 
+    
+    msg = await update.message.reply_text(f'Changing prompt....')
+    if new_promt :
+        if  context.args[0].lower() == 'd' or context.args[0].lower() == 'default' or context.args[0].lower() == 'orignal':
+        
+           chat_histories[chat_id]= model.start_chat(history=[] )
+           DB.update_instruction(chat_id)
+           await msg.edit_text(f"Tʜᴇ ᴘʀᴏᴍᴘᴛ ʜᴀs ʙᴇᴇɴ 🎉sᴜᴄᴄᴇssғᴜʟʟʏ🎉 ᴄʜᴀɴɢᴇᴅ ᴛᴏ: <b>'ᴅᴇғᴀᴜʟᴛ'</b>", parse_mode='HTML')
+        else:
+                model_temp = genai.GenerativeModel(
+                    model_name="gemini-1.5-pro-latest",
+                    safety_settings=SAFETY_SETTINGS,
+                    generation_config=GENERATION_CONFIG,
+                    system_instruction=new_promt )
+                chat_histories[chat_id] = model_temp.start_chat(history=[])
+    
+                await msg.edit_text(f"Tʜᴇ ᴘʀᴏᴍᴘᴛ ʜᴀs ʙᴇᴇɴ 🎉sᴜᴄᴄᴇssғᴜʟʟʏ🎉 ᴄʜᴀɴɢᴇᴅ ᴛᴏ: <b>'{new_promt}'</b>", parse_mode='HTML')
+                DB.update_instruction(chat_id,new_promt)
+        DB.chat_history_add(chat_id,[])
+        
+    else:
+        await msg.edit_text("Error : please provide me the prompt which you want to give.")
+            
+        
+
+
+
+
 clear_history_commamd = CommandHandler(("clear_history","clearhistory","clear"),Clear_history)
             
             

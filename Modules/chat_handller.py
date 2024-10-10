@@ -453,7 +453,7 @@ async def Chat_Info(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         else:
            await update.message.reply_text(" You need to be group/chat admin to do this function.")
     msg = await update.message.reply_text(f"Please be patient we are extracting this chat's data....")
-    await msg.edit_text(DB.info(update.message.chat_id), parse_mode='HTML')
+    await msg.edit_text(DB.info(chat_id), parse_mode='HTML')
 
         
 

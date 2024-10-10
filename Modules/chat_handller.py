@@ -403,10 +403,12 @@ async def changeprompt(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
     chat_id = update.message.chat_id
     new_promt = " ".join(context.args)
     if update.effective_chat.type == "private":
+        pass
            
     else:
         chat_admins = await update.effective_chat.get_administrators()
         if update.effective_user in (admin.user for admin in chat_admins):
+            pass
            
         else:
            await update.message.reply_text(" You need to be group/chat admin to do this function.")
@@ -440,6 +442,7 @@ async def changeprompt(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
 
 
 clear_history_commamd = CommandHandler(("clear_history","clearhistory","clear"),Clear_history)
+changeprompt_command =CommandHandler(("changeprompt","change_prompt","prompt"),changeprompt)
             
             
         

@@ -12,6 +12,8 @@ from telegram.ext import (
     ContextTypes,
     CommandHandler
 )
+from utils.decoders_ import rate_limit
+
 
 import os 
 import time
@@ -435,7 +437,24 @@ async def changeprompt(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
         
     else:
         await msg.edit_text("Error : please provide me the prompt which you want to give.")
-            
+
+
+@restricted
+@rate_limit
+async def Chat_Info(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None: 
+    chat_id = update.message.chat_id
+    if update.effective_chat.type == "private":
+        pass
+    else:
+        chat_admins = await update.effective_chat.get_administrators()
+        if update.effective_user in (admin.user for admin in chat_admins):
+            pass
+           
+        else:
+           await update.message.reply_text(" You need to be group/chat admin to do this function.")
+    msg = await update.message.reply_text(f"Please be patient we are extracting this chat's data....")
+    await msg.edit_text(DB.info(update.message.chat_id), parse_mode='HTML')
+
         
 
 
@@ -443,7 +462,8 @@ async def changeprompt(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
 
 clear_history_commamd = CommandHandler(("clear_history","clearhistory","clear"),Clear_history)
 changeprompt_command =CommandHandler(("changeprompt","change_prompt","prompt"),changeprompt)
-            
+Chat_Info_command =CommandHandler(("info","myinfo","Info"),Chat_Info)
+                       
             
         
 

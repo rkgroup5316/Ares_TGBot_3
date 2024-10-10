@@ -9,7 +9,7 @@ from assets.assets import load_asset
 from _error_handller import error_handler
 
 logger.info("Loading message handllers....")
-from Modules.chat_handller import process_message,media_handler,Reply_handller,clear_history_commamd
+from Modules.chat_handller import process_message,media_handler,Reply_handller,clear_history_commamd,changeprompt_command
 
 from utils.decoders_ import rate_limit,restricted
 logger.info("Importing commands handllers...")
@@ -144,6 +144,7 @@ def main() -> None:
     application.add_handler(PING_CMD)
     application.add_handler(ID_CMD)
     application.add_handler(clear_history_commamd)
+    application.add_handler(changeprompt_command)
     
     # Owner commands
     application.add_handler(SHELL_CMD)

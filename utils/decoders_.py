@@ -18,7 +18,9 @@ ratelimit = RateLimiter()
 # storing spammy user in cache for 1minute before allowing them to use commands again.
 warned_users = TTLCache(maxsize=128, ttl=60)
 warning_message = "Spam detected! ignoring your all requests for few minutes."
-WARNNED_USERS_NOTIFYED =[] 
+WARNNED_USERS_NOTIFYED =[]
+reported_users = set()
+
 
 def rate_limit(func):
     """
@@ -39,11 +41,18 @@ def rate_limit(func):
             return
 
         elif is_limited and userid in warned_users: 
-            message = f"First Name : {update.effective_user.first_name},UserId: <code>{userid}</code>\n\n Has been caught spamming even after message is send."
-            await context.bot.send_message(
-                chat_id=LOGGER_CHATID, text=message, parse_mode="HTML"
-            )
+            
+            if userid not in reported_users:
+               message = f"First Name : {update.effective_user.first_name},UserId: <code>{userid}</code>\n\n Has been caught spamming even after message is send."
+               await context.bot.send_message(
+                 chat_id=LOGGER_CHATID, text=message, parse_mode="HTML"
+                )
+               reported_users.add(userid)
+               return
+            elif is_limited and userid in reported_users: # If the user has already been warned and reported, ignore further requests without reporting again 
+                return
         else: 
+            reported_users.remove(userid)
             await func(update, context, *args, **kwargs)
 
     wrapper.__name__ = func.__name__

@@ -36,9 +36,9 @@ OWNER_NAME = "ℝ𝕒𝕧𝕚 𝕂𝕖𝕥𝕒𝕟 ℝ𝕒𝕛"
 OWNER_USERNAME = "Rkgroup5316"
 OWNER_INFO_HTML = f"<a href='tg://user?id={OWNER_ID}'>{OWNER_NAME}</a>"
 
-SUPPORT_CHAT_ID = -1002201688413
+SUPPORT_CHAT_ID = 2295233426
 SUPPORT_CHAT_NAME = "Ares"
-SUPPORT_CHAT_INFO_HTML = f"<a href='https://t.me/AresChatBotAi'>{SUPPORT_CHAT_NAME}</a>"
+SUPPORT_CHAT_INFO_HTML = f"<a href='https://t.me/ares_bot_help'>{SUPPORT_CHAT_NAME}</a>"
 START_SWITCH = ("hey ares", "hi ares", "ares", "yo ares","hello ares","what's up ares")
 
 LOGGER_CHATID = -1002182025326

@@ -201,7 +201,7 @@ Thank you."""
     
 
     if update.effective_chat.type == "private":
-        await home(update,ContextTypes)
+        await home(update,context)
         
     else:
         msg = f"I ᴘʀᴇғᴇʀ ᴛᴏ ᴜsᴇ ᴛʜɪs ᴄᴏᴍᴍᴀɴᴅ ɪɴ <b>ɢʀᴏᴜᴘ</b>."

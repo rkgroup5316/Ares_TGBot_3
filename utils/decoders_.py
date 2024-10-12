@@ -18,7 +18,7 @@ ratelimit = RateLimiter()
 # storing spammy user in cache for 1minute before allowing them to use commands again.
 warned_users = TTLCache(maxsize=128, ttl=60)
 warning_message = "Spam detected! ignoring your all requests for few minutes."
-WARNNED_USERS_NOTIFYED =[]
+
 reported_users = set()
 
 

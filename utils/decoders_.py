@@ -52,7 +52,7 @@ def rate_limit(func):
             elif is_limited and userid in reported_users: # If the user has already been warned and reported, ignore further requests without reporting again 
                 return
         else: 
-            reported_users.remove(userid)
+            reported_users.discard(userid)
             await func(update, context, *args, **kwargs)
 
     wrapper.__name__ = func.__name__

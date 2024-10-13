@@ -38,6 +38,7 @@ model = genai.GenerativeModel(
   model_name="gemini-1.5-pro-latest",
   safety_settings=SAFETY_SETTINGS,
   generation_config=GENERATION_CONFIG,
+  tools='code_execution',
   system_instruction= SYSTEM_INSTRUCTION)
 
 
@@ -133,6 +134,7 @@ def get_chat_history(chat_id):
                 model_name="gemini-1.5-pro-latest",
                 safety_settings=SAFETY_SETTINGS,
                 generation_config=GENERATION_CONFIG,
+                tools='code_execution',
                 system_instruction=instruction
             )
             history=jsonpickle.decode(userData['chat_session'])   # decode history and then store
@@ -428,6 +430,7 @@ async def changeprompt(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
                     model_name="gemini-1.5-pro-latest",
                     safety_settings=SAFETY_SETTINGS,
                     generation_config=GENERATION_CONFIG,
+                    tools='code_execution',
                     system_instruction=new_promt )
                 chat_histories[chat_id] = model_temp.start_chat(history=[])
     

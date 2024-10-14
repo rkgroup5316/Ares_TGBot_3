@@ -15,7 +15,7 @@ import math
 import requests
 import os
 
-from config import video_urls
+from config import video_urls ,FIXIE_SOCKS_HOST
 
 
 
@@ -80,6 +80,7 @@ async def YOUTUBE_CALL_BACK(update: Update, context: ContextTypes.DEFAULT_TYPE):
             "continuedl": True,
             "nocheckcertificate": True,
             "http_chunk_size": 10485760,
+            "proxy": f"socks5://{FIXIE_SOCKS_HOST}",
             "external_downloader_args": ["-x", "20", "-k", "1M"]  # 20 connections, 1MB chunks
         }
 

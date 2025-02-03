@@ -41,7 +41,7 @@ SUPPORT_CHAT_NAME = "Ares"
 SUPPORT_CHAT_INFO_HTML = f"<a href='https://t.me/ares_bot_help'>{SUPPORT_CHAT_NAME}</a>"
 START_SWITCH = ("hey ares", "hi ares", "ares", "yo ares","hello ares","what's up ares")
 
-LOGGER_CHATID = -1002182025326
+LOGGER_CHATID = -1002261795928
 
 MAX_AUDIO_LIMIT = 15*60
 video_urls ={}

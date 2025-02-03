@@ -101,4 +101,4 @@ async def IMAGINE(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 # Register command handlers
-IMAGINE_COMMAND_HANDLER = CommandHandler(("imagine", "generate_image", "create_image"), IMAGINE)
+IMAGINE_COMMAND_HANDLLER = CommandHandler(("imagine", "generate_image", "create_image"), IMAGINE)

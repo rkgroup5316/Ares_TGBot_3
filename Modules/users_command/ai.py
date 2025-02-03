@@ -2,8 +2,8 @@ import time
 import requests
 from utils.log import logger
 
-import google.generativeai as genai
-from google.generativeai.types import GenerateImageConfig
+from google import genai
+from google.genai import types
 
 from telegram.constants import ParseMode, ChatAction
 from utils.decoders_ import rate_limit, restricted
@@ -18,7 +18,7 @@ from config import (
 )
 
 # Configure the Gemini AI client
-genai.configure(api_key=GEMINE_API_KEY)
+client = genai.configure(api_key=GEMINE_API_KEY)
 
 def create_image(prompt: str) -> bytes:
     """Generates an AI-generated image based on the provided prompt.
@@ -30,7 +30,7 @@ def create_image(prompt: str) -> bytes:
         bytes: The generated image in bytes format.
     """
     try:
-        response = genai.generation.generate_image(
+        response = client.models.generate_image(
             model="imagen-3.0-generate-002",
             prompt=prompt,
             config=GenerateImageConfig(

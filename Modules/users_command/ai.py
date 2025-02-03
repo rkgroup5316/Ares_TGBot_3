@@ -18,7 +18,7 @@ from config import (
 )
 
 # Configure the Gemini AI client
-client = genai.configure(api_key=GEMINE_API_KEY)
+client = genai.Client(api_key=GEMINE_API_KEY)
 
 def create_image(prompt: str) -> bytes:
     """Generates an AI-generated image based on the provided prompt.
@@ -33,7 +33,7 @@ def create_image(prompt: str) -> bytes:
         response = client.models.generate_image(
             model="imagen-3.0-generate-002",
             prompt=prompt,
-            config=GenerateImageConfig(
+            config=types.GenerateImageConfig(
                 negative_prompt="rkgroup",
                 number_of_images=1,
                 include_rai_reason=True,

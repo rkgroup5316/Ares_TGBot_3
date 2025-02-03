@@ -31,7 +31,7 @@ def create_image(prompt: str) -> bytes:
     """
     try:
         response = client.models.generate_image(
-            model="imagen-3.0-generate-002",
+            model='imagen-3.0-generate-002',
             prompt=prompt,
             config=types.GenerateImageConfig(
                 negative_prompt="rkgroup",

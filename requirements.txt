@@ -1,7 +1,7 @@
 flask 
 python-telegram-bot
 google-generativeai 
-google-genia
+google-genai
 firebase_admin
 jsonpickle
 pyrate-limiter==2.3.3

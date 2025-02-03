@@ -15,3 +15,4 @@ bing-image-downloader==1.1.2
 wikipedia
 youtube_search
 yt_dlp
+google-genia

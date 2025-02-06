@@ -58,7 +58,7 @@ Some commands require additional input (**arguments**) to function correctly.
 ```plaintext
 /wiki dog(animal)   # Fetches Wikipedia information about dogs
 /google latest AI trends   # Searches Google for the latest AI trends
-
+```
 <p align="center">
   <a href="https://t.me/Rkgroup_Bot">
     <img src="https://img.shields.io/static/v1?label=Join&message=Telegram%20Channel&color=blueviolet&style=for-the-badge&logo=telegram&logoColor=white" alt="Telegram Channel" />

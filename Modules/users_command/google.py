@@ -193,20 +193,35 @@ async def WIKI(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 
-def beautify_views(views):
-    views =''.join(filter(str.isdigit, views))
-
-    views = int(views)
-    if views < 1000:
-        return str(views)
-    elif views < 1_000_000:
-        return f"{views / 1000:.1f} <b>k</b>"
-    elif views < 1_000_000_000:
-        return f"{views / 1_000_000:.1f} <b>m</b>"
-    else:
-        return f"{views / 1_000_000_000:.1f} <b>b</b>"
-
-
+def beautify_views(views: str) -> str:
+    """Convert YouTube view count to a human-readable format."""
+    try:
+        views = views.lower().replace(",", "")  # Normalize input
+        if "k" in views:
+            return f"{float(views.replace('k', '')):.1f} <b>K</b>"
+        elif "m" in views:
+            return f"{float(views.replace('m', '')):.1f} <b>M</b>"
+        elif "b" in views:
+            return f"{float(views.replace('b', '')):.1f} <b>B</b>"
+        return f"{int(views):,}"  # Add comma separators for readability
+    except Exception as e:
+        logger.error(f"Error formatting views: {e}")
+        return views  # Return original string if error occurs
+        
+def time_to_seconds(duration: str) -> int:
+    """Convert time string (hh:mm:ss or mm:ss) to total seconds."""
+    try:
+        parts = list(map(int, duration.split(":")))
+        if len(parts) == 3:
+            hours, minutes, seconds = parts
+        elif len(parts) == 2:
+            hours, minutes, seconds = 0, *parts
+        else:
+            raise ValueError("Invalid time format")
+        return hours * 3600 + minutes * 60 + seconds
+    except ValueError as e:
+        logger.error(f"Error converting time: {e} (input: {duration})")
+        return 0
 
 @rate_limit
 @restricted

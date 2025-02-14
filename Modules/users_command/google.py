@@ -25,7 +25,8 @@ from telegram.ext import (
     ContextTypes,
     CommandHandler,
 )
-
+# Add this to imports
+from urllib.parse import urljoin
 
 
 @rate_limit
@@ -205,89 +206,81 @@ def beautify_views(views):
     else:
         return f"{views / 1_000_000_000:.1f} <b>b</b>"
 
+
+
 @rate_limit
 @restricted
 async def Youtube(update: Update, context: ContextTypes.DEFAULT_TYPE):
     search = " ".join(context.args)
     if not search:
-        await update.message.reply_text("Error: No search query provided.")
+        await update.message.reply_text("🔍 Please provide a search query.\nExample: /yt <song name>")
         return
-    message = await update.message.reply_text("Searching, please wait...")
-    def time_to_seconds(time_str):
-        """Converts a time string in HH:MM:SS format to total seconds.
 
-        Args:
-            time_str: The time string in HH:MM:SS format.
-
-        Returns:
-            The total number of seconds represented by the time string.
-            Returns 0 if the input format is invalid.
-
-        Raises:
-            ValueError: If the time string format is invalid (e.g., missing colons).
-        """
-
-        try:
-            # Split the time string into components and reverse the order
-            time = str(time_str).split(":")
-            if len(time) == 3:
-                hours, minutes, seconds = time
-                total_seconds = int(hours) * 3600 + int(minutes) * 60 + int(seconds)
-            elif len(time) == 2:
-                minutes,seconds = time
-                total_seconds = int(minutes) * 60 + int(seconds)
-            else:
-                logger.error("error! the hh:mm:ss fomat ha san error")
-                return 0
-            return total_seconds
-        except Exception as e:
-            # Handle invalid time string format
-            logger.error(f"error while converting hh:mm:ss error:{e}")
-            return 0  # Or raise a specific error message
+    message = await update.message.reply_text("🎧 Searching YouTube...")
     
-
     try:
-            results = YoutubeSearch(search, max_results=1).to_dict()
-            print(results)
-            result = results[0]
-            title = result["title"][:40]
-            duration = result["duration"]
-            logger.info(f"userId:{update.message.from_user.id} requested /yt {search}")
-            logger.info(f"Total time :{time_to_seconds(duration)}")
-            if time_to_seconds(duration) > MAX_AUDIO_LIMIT:
-                await message.edit_text(f"⚠️ Unfortunately, the song duration ({duration}) exceeds our current limit. Try searching with different keywords to find a shorter song.",reply_markup=music_limit_error)
-                return
-            views = result["views"]
-            video_uuid = str(uuid.uuid4())
-            video_urls[video_uuid] = result
-            
-            thumbnail = result["thumbnails"][0]
-            reply_markup = InlineKeyboardMarkup([
-                [
-                    InlineKeyboardButton("Download Audio 🎵", callback_data=f"audio:{video_uuid}"),
-                    InlineKeyboardButton("Download Video 🎥", callback_data=f"video:{video_uuid}")
-                ],
-                 [InlineKeyboardButton("❌ᴄʟᴏsᴇ", callback_data="close")]
-            ])
-            await context.bot.delete_message(chat_id=update.effective_chat.id, message_id=message.message_id)
-            await context.bot.send_photo(
-                chat_id=update.effective_chat.id,
-                photo=thumbnail,
-                caption=f"<b>Title:</b>     <i>{escape(title)}</i>\n"
-                        f"<b>Duration:</b>  <i>{duration}</i>\n"
-                        f"<b>Views:</b>     <i>{beautify_views(views)}</i>\n"
-                        "<b>Select an option to download:</b>",
-                parse_mode=ParseMode.HTML,
-                reply_markup=reply_markup
+        results = YoutubeSearch(search, max_results=1).to_dict()
+        if not results:
+            await message.edit_text("❌ No results found. Try different keywords.")
+            return
+
+        result = results[0]
+        video_id = result['id']
+        title = escape(result["title"])
+        duration = escape(result["duration"])
+        views = beautify_views(result["views"])
+        yt_url = urljoin("https://youtube.com/watch?v=", video_id)
+
+        # Check duration limit
+        if (duration_seconds := time_to_seconds(duration)) > MAX_AUDIO_LIMIT:
+            await message.edit_text(
+                f"⏳ Duration exceeds limit ({duration} > {MAX_AUDIO_LIMIT//60}min)",
+                reply_markup=music_limit_error
             )
+            return
+
+        # Generate UUID for callback handling
+        video_uuid = str(uuid.uuid4())
+        video_urls[video_uuid] = {
+            "id": video_id,
+            "title": title,
+            "url": yt_url
+        }
+
+        # Create interactive buttons
+        reply_markup = InlineKeyboardMarkup([
+            [
+                InlineKeyboardButton("🎵 𝖣𝗈𝗐𝗇𝗅𝗈𝖺𝖽 𝖠𝗎𝖽𝗂𝗈", callback_data=f"audio:{video_uuid}"),
+                InlineKeyboardButton("🎥 𝖣𝗈𝗐𝗇𝗅𝗈𝖺𝖽 𝖵𝗂𝖽𝖾𝗈", callback_data=f"video:{video_uuid}")
+            ],
+            [InlineKeyboardButton("📺 𝖶𝖺𝗍𝖼𝗁", url=yt_url)],
+            [InlineKeyboardButton("𝗖𝗹𝗼𝘀𝗲", callback_data="close")]
+        ])
+
+        # Send result with link preview
+        await context.bot.delete_message(
+            chat_id=update.effective_chat.id,
+            message_id=message.message_id
+        )
+        
+        preview_text = (
+            f"🎶 <b>{title}</b>\n\n"
+            f"⏱ 𝖣𝗎𝗋𝖺𝗍𝗂𝗈𝗇: <code>{duration}</code>\n"
+            f"👀 𝖵𝗂𝖾𝗐𝗌: {views}\n"
+            f"🔗 {yt_url}"
+        )
+        
+        await context.bot.send_message(
+            chat_id=update.effective_chat.id,
+            text=preview_text,
+            parse_mode=ParseMode.HTML,
+            disable_web_page_preview=False,
+            reply_markup=reply_markup
+        )
 
     except Exception as e:
-            await message.edit_text("😴 Song not found on YouTube. Try with different keywords.")
-            logger.error(f"Error during YouTube search: {str(e)}")
-
-
-
-
+        logger.error(f"YouTube search error: {str(e)}")
+        await message.edit_text("⚠️ 𝖤𝗋𝗋𝗈𝗋 𝗌𝖾𝖺𝗋𝖼𝗁𝗂𝗇𝗀 𝖸𝗈𝗎𝖳𝗎𝖻𝖾. 𝖯𝗅𝖾𝖺𝗌𝖾 𝗍𝗋𝗒 𝖺𝗀𝖺𝗂𝗇 𝗅𝖺𝗍𝖾𝗋.")
 
 
 GOOGLE_SEARCH_COMMAND = CommandHandler(("google","search"),SERACH)

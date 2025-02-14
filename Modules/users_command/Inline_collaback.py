@@ -83,7 +83,7 @@ async def YOUTUBE_CALL_BACK(update: Update, context: ContextTypes.DEFAULT_TYPE):
     "cookiefile": "Cookie.txt",
     # "proxy": f"socks5://{FIXIE_SOCKS_HOST}",
     "external_downloader_args": ["-x", "20", "-k", "1M"],  # 20 connections, 1MB chunks
-    "ffmpeg_location": "/usr/local/bin/ffmpeg"  # Specify FFmpeg location
+    "ffmpeg_location": "/tmp/ffmpeg/ffmpeg"  # Specify FFmpeg location
             }
 
 

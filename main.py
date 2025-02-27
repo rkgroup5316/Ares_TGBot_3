@@ -44,12 +44,12 @@ from telegram.ext import (
     filters
 )
 from config import * # imports all the attributes and modules
-from utils.helper.keep_alive import keep_alive
+from utils.helper.keep_alive
 logger.info("ALl modules imported successfully...")
 
 logger.info("starting auto ping")
 # Start the scheduler to begin pinging
-start_scheduler()
+keep_alive.start_scheduler()
 logger.info("server Started!")
 
 @restricted

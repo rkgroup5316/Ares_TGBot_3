@@ -1,6 +1,5 @@
 # =============================[ UPTIME ISSUE FIXED ]================================#
 from os import environ
-import logging
 import requests
 from flask import Flask
 from threading import Thread

@@ -44,7 +44,7 @@ from telegram.ext import (
     filters
 )
 from config import * # imports all the attributes and modules
-from utils.helper.keep_alive
+from utils.helper import keep_alive
 logger.info("ALl modules imported successfully...")
 
 logger.info("starting auto ping")

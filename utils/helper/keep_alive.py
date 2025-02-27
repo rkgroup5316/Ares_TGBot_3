@@ -28,7 +28,7 @@ def ping_self():
 
 def start_scheduler():
     """Start a background scheduler to ping every 50 seconds."""
-    scheduler = BackgroundScheduler()
+    scheduler = BackgroundScheduler(timezone=pytz.utc)
     scheduler.add_job(ping_self, 'interval', seconds=50)
     scheduler.start()
 

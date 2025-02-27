@@ -47,8 +47,9 @@ from config import * # imports all the attributes and modules
 from utils.helper.keep_alive import keep_alive
 logger.info("ALl modules imported successfully...")
 
-logger.info("strting flask server!")
-keep_alive()
+logger.info("starting auto ping")
+# Start the scheduler to begin pinging
+start_scheduler()
 logger.info("server Started!")
 
 @restricted

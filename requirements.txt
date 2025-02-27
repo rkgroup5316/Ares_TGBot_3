@@ -1,5 +1,6 @@
 flask
-pytz
+Flask==2.1.2
+pytz==2023.3
 requests
 apscheduler==3.7.0
 python-telegram-bot

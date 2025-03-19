@@ -7,8 +7,9 @@ BotStartTime = time.time()
 SPECIAL_PASSWORD = secrets.token_urlsafe(32)
 
 
-__version__ = '6.0.00'
+__version__ = '6.0.01'
 BOTS_USERNAME = "Ares_chatBot"
+DEBUG_MODE = False
 
 
 
@@ -32,16 +33,16 @@ TLG_TOKEN = os.environ.get("TLG_TOKEN")
 DB_SESSION_INFO=json.loads(os.environ.get("DB_SESSION_INFO"))
 
 OWNER_ID = 6258187891
-OWNER_NAME = "ℝ𝕒𝕧𝕚 𝕂𝕖𝕥𝕒𝕟 ℝ𝕒𝕛"
+OWNER_NAME = "Rkgroup"
 OWNER_USERNAME = "Rkgroup5316"
 OWNER_INFO_HTML = f"<a href='tg://user?id={OWNER_ID}'>{OWNER_NAME}</a>"
 
 SUPPORT_CHAT_ID = 2295233426
 SUPPORT_CHAT_NAME = "Ares"
-SUPPORT_CHAT_INFO_HTML = f"<a href='https://t.me/ares_bot_help'>{SUPPORT_CHAT_NAME}</a>"
+SUPPORT_CHAT_INFO_HTML = f"<a href='https://t.me/Rkgroup_helpbot?start=start'>Support /Assistance</a>"
 START_SWITCH = ("hey ares", "hi ares", "ares", "yo ares","hello ares","what's up ares")
 
-LOGGER_CHATID = -1002261795928
+LOGGER_CHATID = -1002417887574
 
 MAX_AUDIO_LIMIT = 15*60
 video_urls ={}

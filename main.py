@@ -44,12 +44,22 @@ from telegram.ext import (
     filters
 )
 from config import * # imports all the attributes and modules
-from utils.helper import keep_alive
+
+from keep_alive_ping import KeepAliveService
+# Import keep Alive for render/koyeb
+
+service = KeepAliveService(
+    ping_interval=60  # Ping every 1 minutes
+)
+
 logger.info("ALl modules imported successfully...")
 
 logger.info("starting auto ping")
 # Start the scheduler to begin pinging
-keep_alive.start_scheduler()
+try:
+  service.start()
+except Exception as e:
+  raise e
 logger.info("server Started!")
 
 @restricted

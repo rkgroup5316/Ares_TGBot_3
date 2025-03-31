@@ -49,7 +49,8 @@ from keep_alive_ping import KeepAliveService
 # Import keep Alive for render/koyeb
 
 service = KeepAliveService(
-    ping_interval=60  # Ping every 1 minutes
+    ping_interval=60,  # Ping every 1 minutes
+    log_level = 30 # warning 
 )
 
 logger.info("ALl modules imported successfully...")
@@ -117,7 +118,7 @@ async def post_init(application: Application) -> None:
     start_message = (
             f"<b>Bot Started</b>\n"
             f"Start Time: <code>{START_TIME}</code>\n"
-            f"Your shutdown password is: <code>{SPECIAL_PASSWORD}</code>"
+            # f"Your shutdown password is: <code>{SPECIAL_PASSWORD}</code>"
         )
         
     await application.bot.send_message(

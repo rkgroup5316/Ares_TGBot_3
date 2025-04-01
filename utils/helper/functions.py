@@ -1,4 +1,3 @@
-
 def get_readable_time(seconds: int) -> str:
     """
     Return a human-readable time format

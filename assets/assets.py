@@ -38,11 +38,12 @@ class Asset:
             raise FileNotFoundError(f"Image file not found: {self.path}")
 
         try:
-            with open(self.path, 'rb') as f:
+            with open(self.path, "rb") as f:
                 self.data = f.read()
                 return self.data
         except IOError as e:
             raise IOError(f"Error reading image file: {self.path}") from e
+
 
 def load_asset(path: str, value: str = None) -> Asset:
     """
@@ -58,7 +59,7 @@ def load_asset(path: str, value: str = None) -> Asset:
     """
 
     asset = Asset(path, value)
-    bytesData=asset.load()
+    bytesData = asset.load()
     return bytesData
 
 
@@ -66,10 +67,9 @@ def send_image_via_telegram_bot():
     pass
 
 
-
 # Example usage
-if __name__ == '__main__':
-    image_path = 'path/to/your/image.jpg'
+if __name__ == "__main__":
+    image_path = "path/to/your/image.jpg"
     asset = load_asset(image_path)
 
     # Send the image using your Telegram bot code (replace with your implementation)

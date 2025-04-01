@@ -1,69 +1,27 @@
+import os
 import re
-
-from utils.log import logger
-
+import uuid
 from html import escape
 
-import os
-
-import uuid
-
-
-
-from search_engine_parser import GoogleSearch
-
-from bing_image_downloader import downloader
-
-from search_engine_parser.core.exceptions import NoResultsOrTrafficError
-
-
-
 import wikipedia
-
+from bing_image_downloader import downloader
+from search_engine_parser import GoogleSearch
+from search_engine_parser.core.exceptions import NoResultsOrTrafficError
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
+from telegram.constants import ChatAction, ParseMode
+from telegram.ext import CommandHandler, ContextTypes
 from wikipedia.exceptions import DisambiguationError, PageError
-
-
-
-from config import MAX_AUDIO_LIMIT,video_urls
-
-from Modules.inline import music_limit_error
-
-
-
 from youtube_search import YoutubeSearch
 
-
-
-
-
-
-
-from telegram.constants import ParseMode,ChatAction
-
-from utils.decoders_ import rate_limit,restricted
-
-from telegram import Update,InlineKeyboardButton,InlineKeyboardMarkup
-
-from telegram.ext import (
-
-    ContextTypes,
-
-    CommandHandler,
-
-)
-
-
-
-
-
+from config import MAX_AUDIO_LIMIT, video_urls
+from Modules.inline import music_limit_error
+from utils.decoders_ import rate_limit, restricted
+from utils.log import logger
 
 
 @rate_limit
-
 @restricted
-
 async def SERACH(update: Update, context: ContextTypes.DEFAULT_TYPE):
-
     """
 
     Serach results from google.
@@ -71,34 +29,23 @@ async def SERACH(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """
 
     GOOGLE_SEARCH_USAGE = (
-
-    "<b>Usage:</b> Use this command to search a query on Google. "
-
-    "You can specify the page number to get results from a specific page.\n\n"
-
-    "<b>Example:</b> /google your search query\n"
-
-    "<b>Example with page:</b> /google your search query page=2"
-
-)
-
-    
+        "<b>Usage:</b> Use this command to search a query on Google. "
+        "You can specify the page number to get results from a specific page.\n\n"
+        "<b>Example:</b> /google your search query\n"
+        "<b>Example with page:</b> /google your search query page=2"
+    )
 
     seraching_reply = await update.message.reply_text("🔎🇸​​​​​🇪​​​​​🇦​​​​​🇷​​​​​🇨​​​​​🇭​​​​​🇮​​​​​🇳​​​​​🇬​​​​​...")
-
-    
 
     Query = context.args
 
     if not Query:
 
-        seraching_reply.edit_text(GOOGLE_SEARCH_USAGE,parse_mode=ParseMode.HTML)
+        seraching_reply.edit_text(GOOGLE_SEARCH_USAGE, parse_mode=ParseMode.HTML)
 
-        return 
+        return
 
-    Query = ' '.join(Query) # join all the args tio from one str
-
-    
+    Query = " ".join(Query)  # join all the args tio from one str
 
     page = re.findall(r"page=\d+", Query)
 
@@ -114,17 +61,9 @@ async def SERACH(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         page = 1
 
-    
-
     search_args = (str(Query), int(page))
 
-    
-
-
-
     try:
-
-
 
         gsearch = GoogleSearch()
 
@@ -142,38 +81,34 @@ async def SERACH(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
                 desc = escape(gresults["descriptions"][i])
 
-                msg += f"❍<a href='{link}'>{escape(title)}</a>\n<b>{escape(desc)}</b>\n\n"
+                msg += (
+                    f"❍<a href='{link}'>{escape(title)}</a>\n<b>{escape(desc)}</b>\n\n"
+                )
 
             except IndexError:
 
                 break
 
         await seraching_reply.edit_text(
-
-            "<b>Search Query:</b>\n<code>" + escape(Query) + "</code>\n\n<b>Results:</b>\n" + msg, disable_web_page_preview=True,parse_mode=ParseMode.HTML
-
+            "<b>Search Query:</b>\n<code>"
+            + escape(Query)
+            + "</code>\n\n<b>Results:</b>\n"
+            + msg,
+            disable_web_page_preview=True,
+            parse_mode=ParseMode.HTML,
         )
 
     except NoResultsOrTrafficError:
 
         await seraching_reply.edit_text(
-
-            "Sᴏʀʀʏ ᴄᴏᴜʟᴅɴ'ᴛ Sᴇᴀʀᴄʜ ᴛʜᴇ Qᴜᴇʀʏ ᴀᴛ ᴛʜɪs ᴍᴏᴍᴇɴᴛ ᴛʀʏ ᴀɢᴀɪɴ .",parse_mode=ParseMode.HTML
-
+            "Sᴏʀʀʏ ᴄᴏᴜʟᴅɴ'ᴛ Sᴇᴀʀᴄʜ ᴛʜᴇ Qᴜᴇʀʏ ᴀᴛ ᴛʜɪs ᴍᴏᴍᴇɴᴛ ᴛʀʏ ᴀɢᴀɪɴ .",
+            parse_mode=ParseMode.HTML,
         )
 
 
-
-
-
-
-
 @rate_limit
-
 @restricted
-
 async def SERACH_IMG(update: Update, context: ContextTypes.DEFAULT_TYPE):
-
     """
 
     Serach image results from bing.
@@ -181,36 +116,25 @@ async def SERACH_IMG(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """
 
     IMAGE_SEARCH_USAGE = (
-
-    "<b>Usage:</b> Use this command to search an image on bing. "
-
-    "You can specify the page number to get results from a specific amount of image.\n\n"
-
-    "<b>Example:</b> /image your search query\n"
-
-    "<b>Example with page:</b> /image your search query page=2"
-
-)
-
-    
+        "<b>Usage:</b> Use this command to search an image on bing. "
+        "You can specify the page number to get results from a specific amount of image.\n\n"
+        "<b>Example:</b> /image your search query\n"
+        "<b>Example with page:</b> /image your search query page=2"
+    )
 
     seraching_reply = await update.message.reply_text("🔎🇸​​​​​🇪​​​​​🇦​​​​​🇷​​​​​🇨​​​​​🇭​​​​​🇮​​​​​🇳​​​​​🇬​​​​​...")
 
     chat_id = update.message.chat_id
 
-    
-
     Query = context.args
 
     if not Query:
 
-        seraching_reply.edit_text(IMAGE_SEARCH_USAGE,parse_mode=ParseMode.HTML)
+        seraching_reply.edit_text(IMAGE_SEARCH_USAGE, parse_mode=ParseMode.HTML)
 
-        return 
+        return
 
-    Query = ' '.join(Query) # join all the args tio from one str
-
-    
+    Query = " ".join(Query)  # join all the args tio from one str
 
     page = re.findall(r"page=\d+", Query)
 
@@ -228,19 +152,9 @@ async def SERACH_IMG(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         page = 1
 
-
-
-
-
-
-
     await context.bot.send_chat_action(chat_id=chat_id, action=ChatAction.UPLOAD_PHOTO)
 
-
-
     downloaded_images = []
-
-
 
     await seraching_reply.delete()
 
@@ -248,35 +162,41 @@ async def SERACH_IMG(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         path = None
 
-        downloader.download(Query, limit=int(page), output_dir='catch', adult_filter_off=True, timeout=60)
+        downloader.download(
+            Query,
+            limit=int(page),
+            output_dir="catch",
+            adult_filter_off=True,
+            timeout=60,
+        )
 
         path = f"catch/{Query}"
 
-        downloaded_images = [os.path.join(path,f) for f in os.listdir(path) if f.endswith((".jpg", ".jpeg", ".png", ".gif"))]
+        downloaded_images = [
+            os.path.join(path, f)
+            for f in os.listdir(path)
+            if f.endswith((".jpg", ".jpeg", ".png", ".gif"))
+        ]
 
     except Exception as e:
 
         logger.error(f"Error downloading images: {e} path:{path}")
 
-
-
     try:
 
-        await context.bot.send_chat_action(chat_id=chat_id, action=ChatAction.UPLOAD_PHOTO)
+        await context.bot.send_chat_action(
+            chat_id=chat_id, action=ChatAction.UPLOAD_PHOTO
+        )
 
         for image_path in downloaded_images:
 
-            with open(image_path, 'rb') as image_file:
+            with open(image_path, "rb") as image_file:
 
-                await context.bot.send_photo(photo=image_file,chat_id=chat_id)
-
-            
+                await context.bot.send_photo(photo=image_file, chat_id=chat_id)
 
     except Exception as e:
 
         logger.error(f"Error sending media group: {e}")
-
-    
 
     # Delete the downloaded images after sending
 
@@ -291,15 +211,8 @@ async def SERACH_IMG(update: Update, context: ContextTypes.DEFAULT_TYPE):
             logger.error(f"Error deleting image '{image_path}': {e}")
 
 
-
-
-
-
-
 @rate_limit
-
 @restricted
-
 async def WIKI(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     chat_id = update.effective_chat.id
@@ -315,21 +228,17 @@ async def WIKI(update: Update, context: ContextTypes.DEFAULT_TYPE):
         except DisambiguationError as e:
 
             await update.message.reply_text(
-
-                "Dɪsᴀᴍʙɪɢᴜᴀᴛᴇᴅ ᴘᴀɢᴇs ғᴏᴜɴᴅ! Aᴅᴊᴜsᴛ ʏᴏᴜʀ ᴏ̨ᴜᴇʀʏ ᴀᴄᴄᴏʀᴅɪɴɢʟʏ.\n<i>{}</i>".format(e),
-
+                "Dɪsᴀᴍʙɪɢᴜᴀᴛᴇᴅ ᴘᴀɢᴇs ғᴏᴜɴᴅ! Aᴅᴊᴜsᴛ ʏᴏᴜʀ ᴏ̨ᴜᴇʀʏ ᴀᴄᴄᴏʀᴅɪɴɢʟʏ.\n<i>{}</i>".format(
+                    e
+                ),
                 parse_mode=ParseMode.HTML,
-
-                reply_markup=DisambiguationError
-
+                reply_markup=DisambiguationError,
             )
 
         except PageError as e:
 
             await update.message.reply_text(
-
                 "<code>{}</code>".format(e), parse_mode=ParseMode.HTML
-
             )
 
         if res:
@@ -342,55 +251,41 @@ async def WIKI(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
             if len(result) > 4000:
 
-                  with open("result.txt", "w") as f:
+                with open("result.txt", "w") as f:
 
-                      f.write(f"{result}\n\nUwU OwO OmO UmU")
+                    f.write(f"{result}\n\nUwU OwO OmO UmU")
 
-                  with open("result.txt", "rb") as f:
+                with open("result.txt", "rb") as f:
 
-                      await context.bot.send_document(
-
-                          document=f,
-
-                          filename=f.name,
-
-                          reply_to_message_id=update.message.message_id,
-
-                          chat_id=chat_id,
-
-                          parse_mode=ParseMode.HTML,
-
-                      )
+                    await context.bot.send_document(
+                        document=f,
+                        filename=f.name,
+                        reply_to_message_id=update.message.message_id,
+                        chat_id=chat_id,
+                        parse_mode=ParseMode.HTML,
+                    )
 
             else:
 
-                await update.message.reply_text(
-
-                    result, parse_mode=ParseMode.HTML
-
-                )
+                await update.message.reply_text(result, parse_mode=ParseMode.HTML)
 
         else:
 
-          await update.message.reply_text("Eʀʀᴏʀ 500! sᴇʀᴠᴇʀ ᴇʀʀᴏʀ!", parse_mode=ParseMode.HTML)
-
-        
+            await update.message.reply_text(
+                "Eʀʀᴏʀ 500! sᴇʀᴠᴇʀ ᴇʀʀᴏʀ!", parse_mode=ParseMode.HTML
+            )
 
     else:
 
-       await update.message.reply_text("Eʀʀᴏʀ 400! ᴘʟs ᴘʀᴏᴠɪᴅᴇ ᴀ ᴏ̨ᴜᴇʀʏ ᴛᴏ sᴇᴀʀᴄʜ ɪɴ ᴡɪᴋɪ!", parse_mode=ParseMode.HTML)
-
-
-
-
-
+        await update.message.reply_text(
+            "Eʀʀᴏʀ 400! ᴘʟs ᴘʀᴏᴠɪᴅᴇ ᴀ ᴏ̨ᴜᴇʀʏ ᴛᴏ sᴇᴀʀᴄʜ ɪɴ ᴡɪᴋɪ!",
+            parse_mode=ParseMode.HTML,
+        )
 
 
 def beautify_views(views):
 
-    views =''.join(filter(str.isdigit, views))
-
-
+    views = "".join(filter(str.isdigit, views))
 
     views = int(views)
 
@@ -411,32 +306,21 @@ def beautify_views(views):
         return f"{views / 1_000_000_000:.1f} <b>b</b>"
 
 
-
 @rate_limit
-
 @restricted
-
 async def Youtube(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
-    await update.message.reply_html("♔ <b>Sorry !</b> This feature has been removed use @Quick_dlbot for download")
-
-    
-
-
+    await update.message.reply_html(
+        "♔ <b>Sorry !</b> This feature has been removed use @Quick_dlbot for download"
+    )
 
 
+GOOGLE_SEARCH_COMMAND = CommandHandler(("google", "search"), SERACH)
 
+GOOGLE_SERACH_IMG_COMMAND = CommandHandler(("img", "image"), SERACH_IMG)
 
+WIKI_COMMAND = CommandHandler(("wiki"), WIKI)
 
-
-
-
-
-
-GOOGLE_SEARCH_COMMAND = CommandHandler(("google","search"),SERACH)
-
-GOOGLE_SERACH_IMG_COMMAND = CommandHandler(("img","image"),SERACH_IMG)
-
-WIKI_COMMAND = CommandHandler(("wiki"),WIKI)
-
-YT_COMMND = CommandHandler(("yt","song","music","ganna","audio","youtube","melody"),Youtube)
+YT_COMMND = CommandHandler(
+    ("yt", "song", "music", "ganna", "audio", "youtube", "melody"), Youtube
+)

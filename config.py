@@ -6,16 +6,14 @@ import dotenv
 
 dotenv.load_dotenv()
 
-FIXIE_SOCKS_HOST = 'http://129.213.89.36:80'
+FIXIE_SOCKS_HOST = "http://129.213.89.36:80"
 BotStartTime = time.time()
 SPECIAL_PASSWORD = secrets.token_urlsafe(32)
 
 
-__version__ = '6.0.01'
+__version__ = "6.0.01"
 BOTS_USERNAME = "Ares_chatBot"
 DEBUG_MODE = False
-
-
 
 
 # files
@@ -32,9 +30,7 @@ GEMINE_API_KEY = os.environ.get("GEMINE_API_KEY")
 TLG_TOKEN = os.environ.get("TLG_TOKEN")
 
 
-
-
-DB_SESSION_INFO=json.loads(os.environ.get("DB_SESSION_INFO"))
+DB_SESSION_INFO = json.loads(os.environ.get("DB_SESSION_INFO"))
 
 OWNER_ID = 6258187891
 OWNER_NAME = "Rkgroup"
@@ -43,13 +39,22 @@ OWNER_INFO_HTML = f"<a href='tg://user?id={OWNER_ID}'>{OWNER_NAME}</a>"
 
 SUPPORT_CHAT_ID = 2295233426
 SUPPORT_CHAT_NAME = "Ares"
-SUPPORT_CHAT_INFO_HTML = f"<a href='https://t.me/Rkgroup_helpbot?start=start'>Support /Assistance</a>"
-START_SWITCH = ("hey ares", "hi ares", "ares", "yo ares","hello ares","what's up ares")
+SUPPORT_CHAT_INFO_HTML = (
+    f"<a href='https://t.me/Rkgroup_helpbot?start=start'>Support /Assistance</a>"
+)
+START_SWITCH = (
+    "hey ares",
+    "hi ares",
+    "ares",
+    "yo ares",
+    "hello ares",
+    "what's up ares",
+)
 
 LOGGER_CHATID = -1002417887574
 
-MAX_AUDIO_LIMIT = 15*60
-video_urls ={}
+MAX_AUDIO_LIMIT = 15 * 60
+video_urls = {}
 
 
 PM_MESSAGE = """
@@ -172,37 +177,9 @@ SAFETY_SETTINGS = [
 ]
 
 GENERATION_CONFIG = {
-  "max_output_tokens": 1000,
-  "response_mime_type": "text/plain",
+    "max_output_tokens": 1000,
+    "response_mime_type": "text/plain",
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 INFO_help = {
@@ -243,7 +220,7 @@ INFO_help = {
 <code>/bug</code> - takes bug as argument and report the bug to the devloper\n
 <code>/info</code> - gives info about you acc from cloud\n
 """,
-    "prompting_what":"""
+    "prompting_what": """
 <b>What is a prompt</b>\n
 A prompt is a natural language request submitted to a language model to receive a response back. Prompts can contain questions, instructions, contextual information, examples, and partial input for the model to complete or continue. After the model receives a prompt, depending on the type of model being used, it can generate text, embeddings, code, images, videos, music, and more.
 
@@ -341,26 +318,26 @@ text/rtf
 </pre>\n
 <a href="https://ai.google.dev/gemini-api/docs/prompting_with_media?lang=python#image_formats">for more info</a>
 """,
-    "prompting_media_prompting":"""
+    "prompting_media_prompting": """
     Due to too many info related to this topic you can direclty read the gemnie context page 
     <a href="https://ai.google.dev/gemini-api/docs/file-prompting-strategies">Media Prompting</a>
     
     """,
-    "extra_info_developer":"""
+    "extra_info_developer": """
 <b>About the Developer</b>
 
 This Ares chat bot was solely developed by <a href="https://github.com/RKgroupkg">RKgroup</a> as a fun project. It was initiated on September 2, 2023, for entertainment purposes and has been continuously updated with additional features.
 
 The project is <a href="https://github.com/RKgroupkg/ares_telebot2.0">open-source</a> and licensed under MIT.
     """,
-    "extra_info_bug_version":f"""
+    "extra_info_bug_version": f"""
 
 <b>Version:</b> {__version__}
 
 Stay updated with all the upcoming and recent updates on our <a href="https://t.me/AresChatBotAi">Ares Group</a>. Found a bug? Report it using the command <code>/bug (describe your bug)</code>.
 
 """,
-    "extra_info_contribute":"""
+    "extra_info_contribute": """
 <b>Contribution:</b>
 Currently, this project is solely developed by RKgroup, hosted by Render Service, and kept online by Uptime Robot. Updates are recommended by friends, with some contributors helping improve this bot.
 
@@ -401,7 +378,7 @@ In our support chat, you can:
 
 Don't hesitate to reach out—we're here to ensure you have the best possible experience with Ares. Join us now and be part of our growing community!
 """,
-    "extra_info_how_to_use_in_group":"""
+    "extra_info_how_to_use_in_group": """
 <b>ʜᴏᴡ ᴛᴏ ᴜsᴇ ɪɴ ɢʀᴏᴜᴘ? 🤔💬</b>
 
 When using Ares in direct messages, there's no need for a special start command—simply type your message. However, for a better experience in group chats, please begin your messages with a start command like <i>"hey ares," "yo ares," "hello ares," or "yoo ares."</i> For example: <i>"hey ares, how are you today?"</i> Messages without a start command will be ignored, including images.
@@ -414,19 +391,19 @@ When using Ares in direct messages, there's no need for a special start command�
 Happy chatting! 😊
 
 """,
-      "Command_limit_rate":"""
+    "Command_limit_rate": """
 <b>ᴡʜᴀᴛ ɪs ᴄᴏᴍᴍᴀɴᴅ ʀᴀᴛᴇ ʟɪᴍɪᴛᴀᴛɪᴏɴ?</b>
 
 ᴄᴏᴍᴍᴀɴᴅ ʀᴀᴛᴇ ʟɪᴍɪᴛᴀᴛɪᴏɴ ɪs ᴀ ᴍᴇᴄʜᴀɴɪsᴍ ᴛᴏ ᴘʀᴏᴛᴇᴄᴛ ᴛʜᴇ ʙᴏᴛ ꜰʀᴏᴍ ꜱᴘᴀᴍ ᴏʀ ᴀʙᴜꜱᴇ. ᴛʜɪꜱ ʟɪᴍɪᴛ ᴇɴꜱᴜʀᴇꜱ ᴛʜᴀᴛ ᴏɴʟʏ 5 ᴄᴏᴍᴍᴀɴᴅꜱ ᴄᴀɴ ʙᴇ ᴇxᴇᴄᴜᴛᴇᴅ ᴘᴇʀ ᴍɪɴᴜᴛᴇ, ᴡʜɪᴄʜ ɪꜱ ᴇɴᴏᴜɢʜ ꜰᴏʀ ʀᴇɢᴜʟᴀʀ ᴜꜱᴇʀꜱ. ʙᴜᴛ ɪᴛ ɪꜱ ᴀ ɢʀᴇᴀᴛ ᴄᴏᴜɴᴛᴇʀ ᴀᴛᴛᴀᴄᴋ ꜰᴏʀ ꜱᴘᴀᴍᴍᴇʀꜱ ᴏʀ ᴘᴇʀꜱᴏɴꜱ ᴡʜᴏ ʜᴀᴠᴇ ʙᴀᴅ ɪɴᴛᴇɴᴛ.
       
 """,
-      "command_who_are_admin":"""
+    "command_who_are_admin": """
 <b>Who are admins?</b>
 Admins are individuals who oversee the bot and regulate its actions. They have access to specific commands like /ping and /gb_broadcast, allowing them to manage various aspects of the bot's operations. For further details, please join our community at <a href="https://t.me/AresChatBotAi">@AresChatBotAi</a>.
 
       
 """,
-      "command_arg":"""
+    "command_arg": """
 <b>What are Arguments?</b>
 When using commands like /wiki or /google, providing arguments is essential for them to function correctly. An argument is additional information you give to a command to specify what you are looking for.
 <i>
@@ -440,21 +417,17 @@ Note: If you don't pass the arguments correctly, you will encounter an error (Er
       
       
 """,
-      "command_wiki_disambiguationerror":"""
+    "command_wiki_disambiguationerror": """
 <b>What is Disambiguation Error❓ <b>\n\n
 <b>Disambiguation</b> errors on Wikipedia happen when a search term has multiple meanings, confusing users.\n To solve this, Wikipedia uses <b>disambiguation</b> pages that list different meanings of a term. For example, "Jaguar" could mean the animal, the car brand, or the sports team. Users then click the correct option to find the relevant article, ensuring clarity. 📚
 
 
 
 """,
-      "command_music_limit_error":"""
+    "command_music_limit_error": """
 <b>What is the limit? </b>\n\n
 <b>Limitation:</b> Currently, our bot has a <strong>15-minute duration limit</strong> for downloading audio or music. 🎵 This is to protect the bot from abuse, although most songs are comfortably within this limit.
 
 
-"""
-      
-        
-    
-    
+""",
 }

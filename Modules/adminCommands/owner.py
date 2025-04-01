@@ -173,7 +173,6 @@ async def BOT_ACTIVATION_MESSAGE(update):
         start_message = (
             f"<b>Bot Started</b>\n"
             f"Start Time: <code>{START_TIME}</code>\n"
-            f"Your shutdown password is: <code>{SPECIAL_PASSWORD}</code>"
         )
         await update.bot.send_message(chat_id=OWNER_ID, text=start_message, parse_mode="HTML")
 

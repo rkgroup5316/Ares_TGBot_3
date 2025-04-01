@@ -161,13 +161,13 @@ class FireBaseDB:
             isadmin = self.is_admin(userId)
             isblocked = self.is_user_blocked(userId)
             
-            message = f''' 
-userID :          {userId}
-isAdmin?:         {isadmin}
-isBlocked?:       {isblocked}
-creation date :   {user_data.get("date", "Unknown")}
-Prompt :          {user_data.get("system_instruction", "default")}
-'''
+            message = f""" 
+♔ User Id:       {userId}
+♚ Admin:         {isadmin}
+♛ Blocked:       {isblocked}
+❀ creation date: {user_data.get("date", "Unknown")}
+✿ Prompt:        {user_data.get("system_instruction", "default")}
+                """
             return message
         except Exception as e:
             logger.error(f"Error getting info for user {userId}: {e}")
